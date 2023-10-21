@@ -74,6 +74,7 @@ const Register = () => {
                                     className="w-full px-6 py-3 rounded-lg"
                                     id="email"
                                     name="email"
+                                    autoComplete="email"
                                 />
                                 <p className="text-red-500 text-sm mt-2">
                                     {formik.errors.email}
@@ -108,7 +109,8 @@ const Register = () => {
                                     className="w-full px-6 py-3 rounded-lg"
                                     id="password"
                                     name="password"
-                                />
+                                    autoComplete="new-password"
+                                    />
                                 <p className="text-red-500 text-sm mt-2">
                                     {formik.errors.password}
                                 </p>
@@ -118,7 +120,7 @@ const Register = () => {
                             <label
                                 htmlFor="confPassword"
                                 className="font-medium"
-                            >
+                                >
                                 Konfirmasi Kata Sandi
                             </label>
                             <div className="my-2">
@@ -128,7 +130,8 @@ const Register = () => {
                                     className="w-full px-6 py-3 rounded-lg"
                                     id="confPassword"
                                     name="confPassword"
-                                />
+                                    autoComplete="new-password"
+                                    />
                                 <p className="text-red-500 text-sm mt-2">
                                     {formik.errors.confPassword}
                                 </p>

@@ -12,7 +12,7 @@ const DHeader = () => {
     return (
         <header className="border-b-2 border-black bg-color-primary">
             <div className="container mx-auto flex items-center justify-between">
-                <Link to={"/"}>
+                <Link to={"/dashboard"}>
                     <img src={Logo} alt="logo" />
                 </Link>
                 <div className="flex gap-x-4">
@@ -39,16 +39,31 @@ const DHeader = () => {
                             <div className="flex gap-x-2 items-center">
                                 <Avatar
                                     name="Andreas Sibua"
-                                    src="https://bit.ly/dan-abramov"
+                                    src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
                                     size="sm"
                                 />
-                                Andreas <ChevronDownIcon />
+                                Jokowi <ChevronDownIcon />
                             </div>
                         </MenuButton>
-                        <MenuList>
-                            <MenuItem>Profile</MenuItem>
-                            <MenuItem>Favorit</MenuItem>
-                            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+                        <MenuList className="flex flex-col justify-center">
+                            <Link
+                                to="/profil"
+                                className="px-3 py-1 hover:bg-slate-100"
+                            >
+                                Profil
+                            </Link>
+                            <Link
+                                to="/favorit"
+                                className="px-3 py-1 hover:bg-slate-100"
+                            >
+                                Favorit
+                            </Link>
+                            <button
+                                className="px-3 py-1 hover:bg-slate-100 text-left"
+                                onClick={handleLogout}
+                            >
+                                Logout
+                            </button>
                         </MenuList>
                     </Menu>
                 </div>

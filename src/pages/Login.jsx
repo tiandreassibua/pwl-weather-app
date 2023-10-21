@@ -79,6 +79,7 @@ const Login = () => {
                                     className="w-full px-6 py-3 rounded-lg"
                                     id="password"
                                     onChange={handleForm}
+                                    autoComplete="password"
                                 />
                                 <p className="text-red-500 text-sm mt-2">
                                     {formik.errors.password}
