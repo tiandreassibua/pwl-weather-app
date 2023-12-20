@@ -5,14 +5,16 @@ import { useEffect, useState } from "react";
 import DForecastDaysList from "./DForecastDaysList";
 
 const DHome = () => {
+    const [query, setQuery] = useState("Yogyakarta");
     const [currentForecast, setCurrentForecast] = useState([]);
     const [forecastDays, setForecastDays] = useState([]);
+    const [isFavorite, setIsFavorite] = useState(false);
 
-    const forecast = async () => {
+    const forecast = async (query) => {
         try {
             const response = await axiosInstance.get("/forecast.json", {
                 params: {
-                    q: "Yogyakarta",
+                    q: query,
                     days: 7,
                 },
             });
@@ -26,15 +28,46 @@ const DHome = () => {
     };
 
     useEffect(() => {
-        forecast();
-    }, []);
+        forecast(query);
+    }, [query]);
+
+    const handleClickFavorite = () => {
+        const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        const data = {
+            location: currentForecast.location,
+        };
+
+        if (
+            !favorites.some((item) => item.location.name === data.location.name)
+        ) {
+            favorites.push(data);
+            localStorage.setItem("favorites", JSON.stringify(favorites));
+            alert("Berhasilt ditambahkan");
+        } else {
+            alert("Sudah ada di favorit");
+        }
+    };
 
     return (
         <>
-            <DHeader />
+            <DHeader setQuery={setQuery} />
             <div className="container h-screen w-full mt-[-141px] mx-auto">
                 <div className="flex flex-col gap-y-10 justify-center items-center">
-                    <div className="mt-48">
+                    <div className="relative mt-48">
+                        <span
+                            onClick={handleClickFavorite}
+                            className={`absolute -right-60 cursor-pointer text-white drop-shadow hover:text-red-500`}
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                dataslot="icon"
+                                className="w-10"
+                            >
+                                <path d="m11.645 20.91-.007-.003-.022-.012a15.247 15.247 0 0 1-.383-.218 25.18 25.18 0 0 1-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0 1 12 5.052 5.5 5.5 0 0 1 16.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 0 1-4.244 3.17 15.247 15.247 0 0 1-.383.219l-.022.012-.007.004-.003.001a.752.752 0 0 1-.704 0l-.003-.001Z" />
+                            </svg>
+                        </span>
                         <DForecast forecast={currentForecast} />
                     </div>
                     <div>

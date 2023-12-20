@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Alert, AlertIcon } from "@chakra-ui/react";
+import { useEffect } from "react";
 
 const Login = () => {
     const navigate = useNavigate();
@@ -12,8 +13,16 @@ const Login = () => {
 
     const handleLogin = () => {
         const { username, password } = formik.values;
-        if (username == "username" && password == "password") {
-            alert("login berhasil");
+        const db = JSON.parse(localStorage.getItem("db"));
+
+        if (
+            db.find(
+                (item) =>
+                    item.username === username && item.password === password
+            )
+        ) {
+            localStorage.setItem("username", username);
+            alert("Login Berhasil");
             navigate("/dashboard");
         } else {
             setErrorMessage("username atau password salah");
@@ -36,6 +45,12 @@ const Login = () => {
         const { target } = e;
         formik.setFieldValue(target.id, target.value);
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("username")) {
+            navigate("/dashboard");
+        }
+    }, []);
 
     return (
         <>
