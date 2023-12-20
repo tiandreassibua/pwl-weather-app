@@ -10,7 +10,6 @@ const ProfilPage = () => {
 
     const [name, setName] = useState(user.name);
     const [email, setEmail] = useState(user.email);
-    const [username, setUsername] = useState(user.username);
 
     const picRef = useRef(null);
     const [picture, setPicture] = useState(
@@ -79,7 +78,7 @@ const ProfilPage = () => {
                                             <Input
                                                 type="text"
                                                 bg="white"
-                                                value={username}
+                                                value={uname}
                                                 disabled
                                             />
                                         </FormControl>

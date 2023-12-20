@@ -5,11 +5,15 @@ import { useEffect } from "react";
 
 const FavoritePage = () => {
     const [favoriteList, setFavoriteList] = useState([]);
+    const [favoriteHome, setFavoriteHome] = useState([]);
 
     useEffect(() => {
         const favoriteList =
             JSON.parse(localStorage.getItem("favorites")) || [];
         setFavoriteList(favoriteList);
+
+        const favoriteHome = JSON.parse(localStorage.getItem("favHome")) || [];
+        setFavoriteHome(favoriteHome);
     }, []);
 
     const handleClick = (name) => {
@@ -23,6 +27,22 @@ const FavoritePage = () => {
 
         return;
     };
+
+    const handleAddHome = (name) => {
+        if (confirm(`Yakin ingin menambahkan ${name} ke home?`)) {
+            const itemFavHome = favoriteList.find(
+                (item) => item.location.name === name
+            );
+            const newFavoriteHome = [...favoriteHome, itemFavHome];
+
+            localStorage.setItem("favHome", JSON.stringify(newFavoriteHome));
+            alert("Berhasilt ditambahkan ke home");
+        }
+
+        return;
+    };
+
+    // console.log(favoriteList);
 
     return (
         <>
@@ -43,14 +63,26 @@ const FavoritePage = () => {
                                         {item.location.name},{" "}
                                         {item.location.country}
                                     </h1>
-                                    <button
-                                        onClick={() =>
-                                            handleClick(item.location.name)
-                                        }
-                                        className="text-red-500 p-1"
-                                    >
-                                        <DeleteIcon />
-                                    </button>
+                                    <div className="flex items-center">
+                                        <button
+                                            onClick={() =>
+                                                handleAddHome(
+                                                    item.location.name
+                                                )
+                                            }
+                                            className="text-green-500 text-3xl p-1"
+                                        >
+                                            +
+                                        </button>
+                                        <button
+                                            onClick={() =>
+                                                handleClick(item.location.name)
+                                            }
+                                            className="text-red-500 p-1"
+                                        >
+                                            <DeleteIcon />
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>

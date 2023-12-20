@@ -3,12 +3,17 @@ import { axiosInstance } from "../../utils/axios.js";
 import DForecast from "./DForecast";
 import { useEffect, useState } from "react";
 import DForecastDaysList from "./DForecastDaysList";
+import { Image } from "@chakra-ui/react";
 
 const DHome = () => {
     const [query, setQuery] = useState("Yogyakarta");
     const [currentForecast, setCurrentForecast] = useState([]);
     const [forecastDays, setForecastDays] = useState([]);
     const [isFavorite, setIsFavorite] = useState(false);
+
+    const favHome = JSON.parse(localStorage.getItem("favHome")) || [];
+
+    console.log("favHome", favHome);
 
     const forecast = async (query) => {
         try {
@@ -35,6 +40,7 @@ const DHome = () => {
         const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
         const data = {
             location: currentForecast.location,
+            current: currentForecast.current,
         };
 
         if (
@@ -73,6 +79,39 @@ const DHome = () => {
                     <div>
                         <DForecastDaysList data={forecastDays} />
                     </div>
+                    {favHome.length > 0 && (
+                        <>
+                            <span className="border-b-2 w-1/2 border-color-primary" />
+                            <div>
+                                <h1 className="text-3xl text-center font-bold mb-5">
+                                    Favorit
+                                </h1>
+                                <div className="w-full">
+                                    <div className="max-w-6xl container">
+                                        <div className="flex justify-center items-center bg-color-accent rounded-md shadow text-[#333]">
+                                            {favHome?.map((item, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex flex-col items-center text-center py-4 px-5 border-r border-r-color-secondary"
+                                                >
+                                                    <h2 className="font-semibold text-lg">
+                                                        {item.location.name}
+                                                    </h2>
+                                                    <Image
+                                                        src={
+                                                            item.current
+                                                                ?.condition.icon
+                                                        }
+                                                    />
+                                                    <strong>96°C</strong>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
         </>

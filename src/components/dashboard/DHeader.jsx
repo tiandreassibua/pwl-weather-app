@@ -7,6 +7,8 @@ const DHeader = ({ setQuery }) => {
     const [q, setQ] = useState("");
     const navigate = useNavigate();
 
+    const username = localStorage.getItem("username");
+
     const handleLogout = () => {
         localStorage.removeItem("username");
         navigate("/");
@@ -54,7 +56,7 @@ const DHeader = ({ setQuery }) => {
                                     src="https://t3.ftcdn.net/jpg/02/43/12/34/360_F_243123463_zTooub557xEWABDLk0jJklDyLSGl2jrr.jpg"
                                     size="sm"
                                 />
-                                Jokowi <ChevronDownIcon />
+                                {username} <ChevronDownIcon />
                             </div>
                         </MenuButton>
                         <MenuList className="flex flex-col justify-center">
