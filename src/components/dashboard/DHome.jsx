@@ -13,8 +13,6 @@ const DHome = () => {
 
     const favHome = JSON.parse(localStorage.getItem("favHome")) || [];
 
-    console.log("favHome", favHome);
-
     const forecast = async (query) => {
         try {
             const response = await axiosInstance.get("/forecast.json", {
@@ -103,7 +101,9 @@ const DHome = () => {
                                                                 ?.condition.icon
                                                         }
                                                     />
-                                                    <strong>96°C</strong>
+                                                    <strong>
+                                                        {item.current.temp_c}°C
+                                                    </strong>
                                                 </div>
                                             ))}
                                         </div>
